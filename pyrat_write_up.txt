@@ -1,0 +1,123 @@
+# TryHackMe – PyRat Write-Up
+
+## Overview
+
+**Platform:** TryHackMe
+**Room:** PyRat
+**Category:** Linux Privilege Escalation
+**Difficulty:** Medium
+
+PyRat is a Linux-based challenge that focuses on service enumeration, remote code execution, credential discovery, and privilege escalation. My objective was to gain initial access to the target machine, move laterally where necessary, and ultimately obtain root access.
+
+---
+
+## Skills Demonstrated
+
+* Network Enumeration
+* Service Identification and Analysis
+* Python Service Interaction
+* Remote Code Execution (RCE)
+* Linux Enumeration
+* Credential Discovery
+* Database Analysis
+* Privilege Escalation
+* Root Access Acquisition
+
+---
+
+## Methodology
+
+### 1. Enumeration
+
+I started the assessment by performing network reconnaissance to identify open ports and running services on the target machine.
+
+During the enumeration phase, I discovered an unusual Python-based service running on a non-standard port. Since the service did not immediately reveal its purpose, I manually interacted with it to understand its functionality.
+
+---
+
+### 2. Service Analysis
+
+After spending some time interacting with the service, I noticed that it accepted Python commands and processed user input in an unsafe manner.
+
+By testing different inputs and observing the responses, I confirmed that I could execute Python code remotely on the target machine. This effectively gave me a remote code execution (RCE) capability.
+
+---
+
+### 3. Initial Access
+
+Using the code execution functionality, I executed system commands and established a shell on the target machine.
+
+With initial access obtained, I began enumerating the local environment to identify users, services, files, and potential privilege escalation vectors.
+
+---
+
+### 4. Credential Discovery
+
+During local enumeration, I searched through configuration files, application data, and user directories for sensitive information.
+
+This process revealed credentials stored within the system. Further investigation uncovered database-related information containing additional authentication details that could be used to access another account.
+
+---
+
+### 5. User Access
+
+Using the credentials I discovered, I successfully switched to another user account on the system.
+
+This provided a more privileged foothold and expanded my access to files and resources that were not available from my initial shell.
+
+---
+
+### 6. Privilege Escalation
+
+After gaining access to the second account, I continued reviewing system configurations, scheduled tasks, and file permissions.
+
+I eventually identified a privilege escalation opportunity that allowed me to execute commands with elevated privileges. Exploiting this weakness enabled me to gain full root access to the machine.
+
+Once root access was obtained, I successfully retrieved the root flag and completed the challenge.
+
+---
+
+## Vulnerabilities Identified
+
+1. Insecure Python Service Configuration
+2. Remote Code Execution (RCE)
+3. Credential Exposure
+4. Weak Privilege Separation
+5. Misconfigured Privileged Execution
+
+---
+
+## Attack Chain Summary
+
+Network Enumeration
+→ Python Service Analysis
+→ Remote Code Execution
+→ Credential Discovery
+→ User Account Access
+→ Privilege Escalation
+→ Root Access
+
+---
+
+## Tools Used
+
+* Nmap
+* Netcat
+* Linux Command Line Utilities
+* Python
+
+---
+
+## Key Lessons Learned
+
+* Custom services should never execute user-supplied input without proper validation.
+* Exposed credentials can significantly accelerate lateral movement within a system.
+* Thorough local enumeration is often the key to successful privilege escalation.
+* Small misconfigurations can become critical security issues when combined together.
+* Understanding Linux permissions and scheduled tasks is essential for identifying privilege escalation opportunities.
+
+---
+
+## Outcome
+
+Through a combination of enumeration, service analysis, credential discovery, and privilege escalation techniques, I successfully gained remote code execution on the target machine, accessed multiple user accounts, escalated privileges to root, and retrieved the final flag. This room provided valuable hands-on experience in identifying and chaining together multiple weaknesses to achieve full system compromise.
